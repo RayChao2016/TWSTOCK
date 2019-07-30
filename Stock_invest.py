@@ -58,5 +58,5 @@ def daily_invest():
 
             print(theday_s + '- saved')
         else:
-            print(theday_s + ', not valid')
+            print(theday_s + '- not valid')
 
