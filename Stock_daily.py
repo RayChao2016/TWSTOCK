@@ -18,10 +18,14 @@ import random
 delay_list = [3, 4, 5]
 srr = random.SystemRandom()
 
+@task(name='daily_test')
+def daily_test():
+    print('test')
 
 @task(name='daily_stock')
 def daily_stock():
-    for x in range(0, 100):
+    for x in range(97, 200):
+
         wait_t = srr.choice(delay_list)    
         time.sleep(wait_t)
 
@@ -33,13 +37,14 @@ def daily_stock():
         doc = requests.get(url)
         soup = BeautifulSoup(doc.text, 'html.parser')
         table = soup.find_all('table')
+
         if table:
-            dfs = pd.read_html(url)  ## 回傳DataFrame類別的陣列
+            dfs = pd.read_html(doc.text)  ## 回傳DataFrame類別的陣列
             df = dfs[8]
 
             df = df.iloc[:,0:11]
             df.columns= [u'證券代號', u'證券名稱', u'成交股數', u'成交筆數', u'成交金額', u'開盤價', u'最高價', u'最低價', u'收盤價', u'漲跌(+/-)', u'漲跌價差']
-            row_length = len(df)-1
+            row_length = len(df)
             print(row_length)
             for y in range(row_length):
                 s_id=df[u'證券代號'].iloc[y]
