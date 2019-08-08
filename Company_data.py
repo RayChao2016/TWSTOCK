@@ -21,7 +21,7 @@ tday =  datetime.datetime.now().date()
 theday =  datetime.datetime.now().date()- timedelta(days=6)
 @task(name='company_data')
 def company_data():
-#using 2019/8/2 data finished
+
     if Dailydata.objects.filter(data_date = tday).exists():
         the_day = tday
     else:
