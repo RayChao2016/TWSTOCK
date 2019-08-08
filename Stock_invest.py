@@ -20,10 +20,13 @@ srr = random.SystemRandom()
 
 @task(name='daily_invest')
 def daily_invest():
-    for x in range(0, 100):
+    tday =  datetime.datetime.now().date()
+
+
+    for x in range(97, 300):
         wait_t = srr.choice(delay_list)    
         time.sleep(wait_t)
-        theday =  datetime.datetime.now().date()- timedelta(days=x)
+        theday =  tday- timedelta(days=x)
         theday_s = theday.strftime("%Y%m%d")       
 
         url = 'https://www.twse.com.tw/fund/TWT44U?response=html&date=' + theday_s
@@ -37,7 +40,7 @@ def daily_invest():
             df = df.iloc[:,1:6]
 
             df.columns = [ u'證券代號', u'證券名稱', u'買進股數', u'賣出股數',  u'買賣超股數']
-            row_length = len(df)-1
+            row_length = len(df)
             for y in range(row_length):
 
                 s_id=df[u'證券代號'].iloc[y]
@@ -58,5 +61,5 @@ def daily_invest():
 
             print(theday_s + '- saved')
         else:
-            print(theday_s + '- not valid')
+            print(theday_s + ', not valid')
 
